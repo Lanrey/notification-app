@@ -34,7 +34,8 @@
   "author": "akinsulereolusola",
   "license": "MIT",
   "dependencies": {
-    "@sendgrid/mail": "^7.3.0",
+    "@sendgrid/mail": "^7.7.0",
+    "amqplib": "^0.10.3",
     "app-root-path": "^3.0.0",
     "aws-sdk": "^2.773.0",
     "bcryptjs": "^2.4.3",
@@ -43,6 +44,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
     "faker": "^4.1.0",
+    "firebase": "^9.17.2",
+    "firebase-admin": "^11.5.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.12",
     "knex-paginate": "^1.2.3",

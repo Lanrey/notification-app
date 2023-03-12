@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get('/', (request, response) => {
-  response.status(200).send('Welcome to Cocoons Letters Limited');
+  response.status(200).send('Welcome to Cocoons Letters Limited Notification Service');
 });
 
 app.use('/api/v1', routes);
