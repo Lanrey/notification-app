@@ -9,7 +9,7 @@ sqMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 async function emailNotification(email, subject, text) {
-    const msq  = {
+    const msg  = {
         to: email,
         from: 'office@noteopx.com',
         subject,

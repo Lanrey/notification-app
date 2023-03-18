@@ -1,21 +1,32 @@
 const dotenv = require('dotenv');
 const appPath = require('app-root-path');
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+const admin = require('firebase-admin');
 
 
 dotenv.config({ path: `${appPath}/.env` });
 
-const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: "noteopx.firebaseapp.com",
-    projectId: "noteopx",
-    storageBucket: "noteopx.appspot.com",
-    messagingSenderId: process.env.MESSAGE_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID
+const serviceAccount = require(`${appPath}/noteopx-firebase-adminsdk-qf5kr-6cb5fd3851 (1).json`);
+
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+async function firebaseNotification(title, content, firebaseToken) {
+    const payload = {
+        notification: {
+            title: title,
+            body: content
+        }
+    }
+
+    const options = {
+        priority: "high",
+        timeToLive: 60 * 60
+    }
+
+    const response = await admin.messaging().sendToDevice(firebaseToken, payload, options)
 }
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export default firebaseNotification

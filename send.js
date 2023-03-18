@@ -1,11 +1,14 @@
 const amqplib = require('amqplib');
 
-const queueName = "hello";
+const queueName = "notifications";
 
 const msg = {
-    id: 1,
+    user_id: 2,
     content: "Sola and sons",
-    email: "olusola.akinsulere"
+    email: "olusola.akinsulere@gmail.com",
+    title: "Binta and friends",
+    subject: "Binta and friends produced by Wale Adenuga Productions",
+    firebaseToken: 'xndkdkk-jdjdjjd-djdjdj-kdkd'
 };
 
 let payload = JSON.stringify(msg);

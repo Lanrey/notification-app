@@ -3,10 +3,13 @@ import cors from 'cors';
 import morgan from 'morgan';
 import routes from './routes';
 import { logger } from './helper';
+import { getNotifications } from './services/consumer.service';
 
 
 const PORT = Number(process.env.PORT) || 5001;
 const app = express();
+
+getNotifications();
 
 // run cron job
 
