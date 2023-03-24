@@ -21,6 +21,9 @@ class Notification {
 
     static async getSingleNotification(notification_id, user_id) {
         try {
+
+            console.log(notification_id);
+            console.log(user_id);
             const result = await db(NOTIFICATION)
             .first()
             .where('id', notification_id)
@@ -33,7 +36,7 @@ class Notification {
         }
     }
 
-    static async getAllNotification(page, user_id){
+    static async getAllNotifications(page, user_id){
         try {
             const result = await db(NOTIFICATION)
             .select("*")
