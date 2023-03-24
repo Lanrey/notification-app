@@ -4,67 +4,13 @@ import pb from "../../notes-protos-nodejs/notification/notification_pb";
 import * as grpc from '@grpc/grpc-js';
 import { HttpError } from "../helper";
 
-
-/*
-
-class Notifications {
-
-    static async getSingleNotification(req, res) {
-        try {
-
-            const {user_id} = req.query;
-            const {notification_id} = req.params;
-
-            const result = await Notification.getSingleNotification(notification_id, user_id);
-
-            if(Object.is(result, undefined)) {
-                return serverResponse(req, res, 404, { data: "Notification not found"});
-            }
-
-            return serverResponse(req, res, 200, { data: result});
-            
-        } catch (error) {
-            return serverError(req, res, error);
-        }
-    }
-
-
-    static async getAllNotification(req, res) {
-        try {
-
-            const { page } = req.params;
-            const {user_id} = req.query;
-
-            const newPage = Number(page);
-
-            const result = await Notification.getAllNotification(newPage, user_id);
-
-            return serverResponse(req, res, 200, { data: result });
-            
-        } catch (error) {
-            return serverError(req, res, error);
-        }
-    }
-}
-
-export default Notifications
-*/
-
-
 exports.getNotification = async (call, callback) => {
     try {
         const user_id = call.request.getUserId();
         const notification_id = call.request.getNotificationId();
 
-        console.log('user_id', user_id);
-        console.log('notification_id', notification_id);
-
        
         const result = await Notification.getSingleNotification(Number(notification_id), Number(user_id));
-  
-
-        console.log(result);
-
        
         const response = new pb.GetNotificationResponse()
         .setId(String(result.id))
@@ -98,14 +44,7 @@ exports.getAllNotification = async (call, callback) => {
         const user_id = call.request.getUserId();
         const page = call.request.getPage();
 
-        console.log('user_id', user_id);
-        console.log('page', page);
-
-       
-
         const result = await Notification.getAllNotifications(Number(page), Number(user_id));
-
-        console.log(result.pagination);
 
         const newResult = result.data.map(res => {
 
@@ -121,7 +60,6 @@ exports.getAllNotification = async (call, callback) => {
 
         })
 
-        console.log("new Result", newResult)
 
         const notification = newResult.map(res => {
            const notifs =  new pb.GetNotificationResponse()
