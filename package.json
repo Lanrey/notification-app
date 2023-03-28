@@ -16,7 +16,7 @@
     "ssl:gen": "cd ssl && ../server/scripts/ssl.sh && cd ..",
     "start:dev": "nodemon --exec babel-node server",
     "prod:build": "npm run clean && npm run build && npm run start",
-    "start": "npm run clean && npm run build && npm run update:proto && node dist/index.js",
+    "start": "npm run clean && npm run build && node dist/index.js",
     "start1": "pm2 start node dist/index.js",
     "stop:all": "pm2 stop all",
     "build": "babel server --out-dir dist",
