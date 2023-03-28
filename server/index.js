@@ -94,7 +94,7 @@ exports.init = init;
 
 // import { logger } from './helper';
 import * as grpc from "@grpc/grpc-js";
-import { NotificationServiceService } from "../notes-protos-nodejs/notification/notification_grpc_pb";
+import { NotificationServiceService } from "./notification_grpc_pb";
 import notification from "./controllers/notification.controller";
 const PORT = Number(process.env.PORT) || 30001;
 const cleanup = (server) => {
