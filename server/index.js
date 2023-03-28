@@ -92,14 +92,14 @@ exports.init = init;
 
 */
 
-import { logger } from './helper';
-import * as grpc from '@grpc/grpc-js';
-import { NotificationServiceService} from '../notes-protos-nodejs/notification/notification_grpc_pb';
-import notification from './controllers/notification.controller';
+// import { logger } from './helper';
+import * as grpc from "@grpc/grpc-js";
+import { NotificationServiceService } from "../notes-protos-nodejs/notification/notification_grpc_pb";
+import notification from "./controllers/notification.controller";
 const PORT = Number(process.env.PORT) || 30001;
 const cleanup = (server) => {
   if (server) {
-    logger.info('Shutting down...');
+    console.info("Shutting down...");
     server.forceShutdown();
   }
 };
@@ -107,8 +107,8 @@ function main() {
   const addr = `0.0.0.0:${PORT}`;
   const server = new grpc.Server();
   const credentials = grpc.ServerCredentials.createInsecure();
-  process.on('SIGINT', () => {
-    logger.warn('Caught interrupt signal');
+  process.on("SIGINT", () => {
+    console.warn("Caught interrupt signal");
     cleanup(server);
   });
   server.addService(NotificationServiceService, notification);
@@ -118,6 +118,6 @@ function main() {
     }
     server.start();
   });
-  logger.info(`Listening on ${addr}`);
+  console.info(`Listening on ${addr}`);
 }
 main();
