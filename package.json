@@ -4,8 +4,8 @@
   "description": "The backend repo built in nodejs for Notes app",
   "main": "index.js",
   "engines": {
-    "node": "18.2.0",
-    "npm": "8.9.0"
+    "node": "18.15",
+    "npm": "9.5.0"
   },
   "custom": {
     "knexfile": "server/database/config/knexfile.js"
