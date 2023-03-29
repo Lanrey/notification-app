@@ -94,9 +94,22 @@ exports.init = init;
 
 import { logger } from './helper';
 import * as grpc from '@grpc/grpc-js';
+import * as protoLoader from '@grpc/proto-loader';
+import { join } from 'path';
 import { NotificationServiceService} from '../notes-protos-nodejs/notification/notification_grpc_pb';
 import notification from './controllers/notification.controller';
 const PORT = Number(process.env.PORT) || 30001;
+
+const PROTO_PATH = join(__dirname, './notification.proto');
+console.log(PROTO_PATH);
+const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  arrays: true,
+});
+
+const notificationProto = grpc.loadPackageDefinition(packageDefinition).notification;
 const cleanup = (server) => {
   if (server) {
     logger.info('Shutting down...');
@@ -111,7 +124,7 @@ function main() {
     logger.warn('Caught interrupt signal');
     cleanup(server);
   });
-  server.addService(NotificationServiceService, notification);
+  server.addService(notificationProto.NotificationService.service, notification);
   server.bindAsync(addr, credentials, (error) => {
     if (error) {
       return cleanup(server);
