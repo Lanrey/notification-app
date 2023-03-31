@@ -98,6 +98,7 @@ import * as protoLoader from '@grpc/proto-loader';
 import { join } from 'path';
 import { NotificationServiceService} from '../notes-protos-nodejs/notification/notification_grpc_pb';
 import notification from './controllers/notification.controller';
+import { getNotifications, getResetPassword, getVerifyEmail, getResetSuccessfulEmail, getWelcomeEmail, getResetPasswords } from './services/consumer.service';
 const PORT = Number(process.env.PORT) || 30001;
 
 const PROTO_PATH = join(__dirname, './notification.proto');
@@ -120,6 +121,11 @@ function main() {
   const addr = `0.0.0.0:${PORT}`;
   const server = new grpc.Server();
   const credentials = grpc.ServerCredentials.createInsecure();
+  getNotifications();
+  getResetPasswords();
+  getResetSuccessfulEmails();
+  getVerifyEmails();
+  getWelcomeEmails();
   process.on('SIGINT', () => {
     logger.warn('Caught interrupt signal');
     cleanup(server);
