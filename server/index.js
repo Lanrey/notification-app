@@ -92,7 +92,7 @@ exports.init = init;
 
 */
 
-import { logger } from "./helper";
+// import { logger } from "./helper";
 import * as grpc from "@grpc/grpc-js";
 import * as protoLoader from "@grpc/proto-loader";
 import { join } from "path";
@@ -108,7 +108,6 @@ import {
 const PORT = Number(process.env.PORT) || 30001;
 
 const PROTO_PATH = join(__dirname, "./notification.proto");
-console.log(PROTO_PATH);
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -135,7 +134,7 @@ function main() {
   getVerifyEmails();
   getWelcomeEmails();
   process.on("SIGINT", () => {
-    logger.warn("Caught interrupt signal");
+    console.warn("Caught interrupt signal");
     cleanup(server);
   });
   server.addService(

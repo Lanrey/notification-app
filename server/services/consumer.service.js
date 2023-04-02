@@ -7,7 +7,7 @@ import {
   getWelcomeEmail,
 } from "./email.service";
 import firebaseNotification from "./firebase.service";
-import { logger } from "../helper";
+// import { console } from "../helper";
 const amqplib = require("amqplib");
 const dotenv = require("dotenv");
 const appPath = require("app-root-path");
@@ -48,7 +48,7 @@ async function getNotifications() {
       { noAck: true }
     );
   } catch (error) {
-    logger.error(`${error} - ${error.message}`);
+    console.error(`${error} - ${error.message}`);
   }
 }
 
@@ -76,7 +76,7 @@ async function getVerifyEmails() {
       { noAck: true }
     );
   } catch (error) {
-    logger.error(`${error} - ${error.message}`);
+    console.error(`${error} - ${error.message}`);
   }
 }
 
@@ -103,7 +103,7 @@ async function getResetSuccessfulEmails() {
       { noAck: true }
     );
   } catch (error) {
-    logger.error(`${error} - ${error.message}`);
+    console.error(`${error} - ${error.message}`);
   }
 }
 
@@ -131,7 +131,7 @@ async function getResetPasswords() {
       { noAck: true }
     );
   } catch (error) {
-    logger.error(`${error} - ${error.message}`);
+    console.error(`${error} - ${error.message}`);
   }
 }
 
@@ -155,7 +155,7 @@ async function getWelcomeEmails() {
       { noAck: true }
     );
   } catch (error) {
-    logger.error(`${error} - ${error.message}`);
+    console.error(`${error} - ${error.message}`);
   }
 }
 
