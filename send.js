@@ -15,9 +15,9 @@ const msg2 = {
 
 const queueName3 = "verify-email";
 const msg3 = {
-    email: "akinsulereolusola@gmail.com",
+    email: "olusola.akinsulere@gmail.com",
     first_name: "olusola",
-    link_url1: "https://google.com"
+    link_url: 'https://twitter.com'
 }
 
 const queueName4 = "welcome-email";
@@ -48,9 +48,9 @@ let payload4 = JSON.stringify(msg4);
 const sendMsg = async () => {
     const connection = await amqplib.connect('amqp://localhost');
     const channel = await connection.createChannel();
-    await channel.assertQueue(queueName1, { durable: false});
-    channel.sendToQueue(queueName1, Buffer.from(payload1));
-    console.log('sent: ', msg1);
+    await channel.assertQueue(queueName3, { durable: false});
+    channel.sendToQueue(queueName3, Buffer.from(payload3));
+    console.log('sent: ', msg3);
     setTimeout(() => {
         connection.close();
         process.exit(0);

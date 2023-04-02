@@ -56,7 +56,7 @@ async function getVerifyEmails() {
 
             const payloadObject = JSON.parse(msg.content.toString());
         
-            await getVerifyEmail(payloadObject.email, payloadObject.first_name, payloadObject.link_url1);
+            await getVerifyEmail(payloadObject.email, payloadObject.first_name, String(payloadObject.link_url));
        
         }, {noAck: true});
         
@@ -104,7 +104,7 @@ async function getResetPasswords() {
 
             const payloadObject = JSON.parse(msg.content.toString());
         
-            await getResetPassword(payloadObject.email, payloadObject.first_name, payloadObject.link_url);
+            await getResetPassword(payloadObject.email, payloadObject.first_name, String(payloadObject.link_url));
        
         }, {noAck: true});
         

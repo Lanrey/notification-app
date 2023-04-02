@@ -26,7 +26,7 @@ async function emailNotification(email, subject, text) {
         })
 }
 
-async function getVerifyEmail(email, first_name, link_url1) {
+async function getVerifyEmail(email, first_name, link_url) {
 
     const msg = {
         to: email,
@@ -34,7 +34,7 @@ async function getVerifyEmail(email, first_name, link_url1) {
         templateId: 'd-cacc59dcc44d46a5a1fb62e56a7152a2',
         dynamic_template_data: {
             first_name,
-            link_url1
+            link_url
         }
 
     }
