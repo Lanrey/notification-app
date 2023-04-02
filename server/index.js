@@ -100,11 +100,10 @@ import { NotificationServiceService } from "../notes-protos-nodejs/notification/
 import notification from "./controllers/notification.controller";
 import {
   getNotifications,
-  getResetPassword,
-  getVerifyEmail,
-  getResetSuccessfulEmail,
-  getWelcomeEmail,
   getResetPasswords,
+  getVerifyEmails,
+  getResetSuccessfulEmails,
+  getWelcomeEmails,
 } from "./services/consumer.service";
 const PORT = Number(process.env.PORT) || 30001;
 

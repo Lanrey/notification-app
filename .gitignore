@@ -2,3 +2,5 @@ node_modules
 logs
 .env
 dist
+server/database/.DS_Store
+server/.DS_Store
