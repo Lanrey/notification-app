@@ -6,19 +6,12 @@ import { HttpError } from "../helper";
 
 exports.getNotification = async (call, callback) => {
     try {
-        const user_id = call.request.getUserId();
-        const notification_id = call.request.getNotificationId();
 
+        const {notification_id, user_id} = call.request;
        
         const result = await Notification.getSingleNotification(Number(notification_id), Number(user_id));
        
-        const response = new pb.GetNotificationResponse()
-        .setId(String(result.id))
-        .setSubject(result.subject)
-        .setTitle(result.title)
-        .setContent(result.content)
-        .setUserId(String(result.user_id));
-        callback(null, response)
+        callback(null, result)
 
     } catch (error) {
       if (error instanceof HttpError) {
@@ -41,10 +34,18 @@ exports.getNotification = async (call, callback) => {
 
 exports.getAllNotification = async (call, callback) => {
     try {
-        const user_id = call.request.getUserId();
-        const page = call.request.getPage();
+
+
+        const {user_id, page} = call.request
+
+        console.log(user_id);
+        console.log(page);
 
         const result = await Notification.getAllNotifications(Number(page), Number(user_id));
+
+        console.log(result);
+
+        /*
 
         const newResult = result.data.map(res => {
 
@@ -59,7 +60,9 @@ exports.getAllNotification = async (call, callback) => {
             return container
 
         })
+*/
 
+        /*
 
         const notification = newResult.map(res => {
            const notifs =  new pb.GetNotificationResponse()
@@ -72,7 +75,9 @@ exports.getAllNotification = async (call, callback) => {
             return notifs
         }) 
 
-       
+        */
+
+       /*
         const response = new pb.GetAllNotificationResponse()
         .setNotificationsList(notification)
         .setTotal(String(result.pagination.total))
@@ -81,7 +86,9 @@ exports.getAllNotification = async (call, callback) => {
         .setCurrentpage(String(result.pagination.currentPage))
         .setFrom(String(result.pagination.from))
         .setTo(String(result.pagination.to))
-        callback(null, response)
+
+        */
+        callback(null, result)
 
     } catch (error) {
       if (error instanceof HttpError) {

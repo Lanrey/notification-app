@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package notification;
+
+message GetNotificationRequest {
+    string user_id = 2;
+    string notification_id = 3;
+}
+
+message GetAllNotificationRequest {
+    string page = 1;
+    string user_id = 2;
+}
+
+message GetNotificationResponse {
+    string id = 1;
+    string subject = 2;
+    string title = 3;
+    string content = 4;
+    string user_id = 5;
+}
+
+message GetAllNotificationResponse {
+    Pagination pagination = 13;
+    repeated GetNotificationResponse data = 12;
+}
+
+
+message Pagination  {
+    string total = 6;
+    string lastPage = 7;
+    string perPage = 8;
+    string currentPage = 9;
+    string from = 10;
+    string to = 11;
+
+}
+
+service NotificationService {
+    rpc getNotification (GetNotificationRequest) returns (GetNotificationResponse);
+    rpc getAllNotification (GetAllNotificationRequest) returns (GetAllNotificationResponse);
+}

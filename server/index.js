@@ -92,11 +92,25 @@ exports.init = init;
 
 */
 
-// import { logger } from './helper';
-import * as grpc from "@grpc/grpc-js";
-import { NotificationServiceService } from "./notification_grpc_pb";
-import notification from "./controllers/notification.controller";
+import { logger } from './helper';
+import * as grpc from '@grpc/grpc-js';
+import * as protoLoader from '@grpc/proto-loader';
+import { join } from 'path';
+import { NotificationServiceService} from '../notes-protos-nodejs/notification/notification_grpc_pb';
+import notification from './controllers/notification.controller';
+import { getNotifications, getResetPassword, getVerifyEmail, getResetSuccessfulEmail, getWelcomeEmail, getResetPasswords } from './services/consumer.service';
 const PORT = Number(process.env.PORT) || 30001;
+
+const PROTO_PATH = join(__dirname, './notification.proto');
+console.log(PROTO_PATH);
+const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  arrays: true,
+});
+
+const notificationProto = grpc.loadPackageDefinition(packageDefinition).notification;
 const cleanup = (server) => {
   if (server) {
     console.info("Shutting down...");
@@ -107,11 +121,21 @@ function main() {
   const addr = `0.0.0.0:${PORT}`;
   const server = new grpc.Server();
   const credentials = grpc.ServerCredentials.createInsecure();
+<<<<<<< HEAD
   process.on("SIGINT", () => {
     console.warn("Caught interrupt signal");
+=======
+  getNotifications();
+  getResetPasswords();
+  getResetSuccessfulEmails();
+  getVerifyEmails();
+  getWelcomeEmails();
+  process.on('SIGINT', () => {
+    logger.warn('Caught interrupt signal');
+>>>>>>> 58ba23ad312fc33312134ecc0d7aa176d201e076
     cleanup(server);
   });
-  server.addService(NotificationServiceService, notification);
+  server.addService(notificationProto.NotificationService.service, notification);
   server.bindAsync(addr, credentials, (error) => {
     if (error) {
       return cleanup(server);
