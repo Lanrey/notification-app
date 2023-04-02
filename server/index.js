@@ -96,7 +96,6 @@ exports.init = init;
 import * as grpc from "@grpc/grpc-js";
 import * as protoLoader from "@grpc/proto-loader";
 import { join } from "path";
-import { NotificationServiceService } from "../notes-protos-nodejs/notification/notification_grpc_pb";
 import notification from "./controllers/notification.controller";
 import {
   getNotifications,
