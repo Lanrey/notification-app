@@ -98,7 +98,7 @@ import * as protoLoader from '@grpc/proto-loader';
 import { join } from 'path';
 import { NotificationServiceService} from '../notes-protos-nodejs/notification/notification_grpc_pb';
 import notification from './controllers/notification.controller';
-import { getNotifications, getResetPassword, getVerifyEmail, getResetSuccessfulEmail, getWelcomeEmail, getResetPasswords } from './services/consumer.service';
+import { getNotifications, getResetPasswords, getVerifyEmails, getResetSuccessfulEmails, getWelcomeEmails } from './services/consumer.service';
 const PORT = Number(process.env.PORT) || 30001;
 
 const PROTO_PATH = join(__dirname, './notification.proto');
