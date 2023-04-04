@@ -1,6 +1,7 @@
 import Notification from "../database/models/notification.model";
 import {emailNotification, getVerifyEmail, getResetPassword, getResetSuccessfulEmail,getWelcomeEmail} from "./email.service";
 import firebaseNotification from "./firebase.service";
+const amqpServerInterface = require('../database/rabbitmq');
 import { logger } from "../helper";
 const amqplib = require('amqplib');
 const dotenv = require('dotenv');
@@ -11,11 +12,13 @@ dotenv.config({ path: `${appPath}/.env` });
 
 
 
+
+
 async function getNotifications() {
     try {
 
         const queueName = 'notifications';
-        const connection = await amqplib.connect(process.env.rabbitmqurl);
+        const connection = await amqpServerInterface.connect()
         const channel = await connection.createChannel();
         await channel.assertQueue(queueName, { durable: false});
         console.log(`Waiting for messages in  queue: ${queueName}`);
@@ -45,7 +48,8 @@ async function getVerifyEmails() {
     try {
 
         const queueName = 'verify-email';
-        const connection = await amqplib.connect(process.env.rabbitmqurl);
+    
+        const connection = await amqpServerInterface.connect()
         const channel = await connection.createChannel();
         await channel.assertQueue(queueName, { durable: false});
         console.log(`Waiting for messages in  queue: ${queueName}`);
@@ -69,7 +73,7 @@ async function getResetSuccessfulEmails() {
     try {
 
         const queueName = 'reset-password-successful';
-        const connection = await amqplib.connect(process.env.rabbitmqurl);
+        const connection = await amqpServerInterface.connect()
         const channel = await connection.createChannel();
         await channel.assertQueue(queueName, { durable: false});
         console.log(`Waiting for messages in  queue: ${queueName}`);
@@ -93,7 +97,7 @@ async function getResetPasswords() {
     try {
 
         const queueName = 'reset-password';
-        const connection = await amqplib.connect(process.env.rabbitmqurl);
+        const connection = await amqpServerInterface.connect()
         const channel = await connection.createChannel();
         await channel.assertQueue(queueName, { durable: false});
         console.log(`Waiting for messages in  queue: ${queueName}`);
@@ -117,7 +121,7 @@ async function getWelcomeEmails() {
     try {
 
         const queueName = 'welcome-email';
-        const connection = await amqplib.connect(process.env.rabbitmqurl);
+        const connection = await amqpServerInterface.connect()
         const channel = await connection.createChannel();
         await channel.assertQueue(queueName, { durable: false});
         console.log(`Waiting for messages in  queue: ${queueName}`);

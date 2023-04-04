@@ -11,6 +11,7 @@ const sendMsg = async () => {
     console.log(`Waiting for messages in  queue: ${queueName}`);
     channel.consume(queueName, msg => {
         console.log("[x] Received:", JSON.parse(msg.content.toString()));
+        
     }, {noAck: true});
 }
 

@@ -15,7 +15,7 @@ const msg2 = {
 
 const queueName3 = "verify-email";
 const msg3 = {
-    email: "olusola.akinsulere@gmail.com",
+    email: "akinsulereolusola@gmail.com",
     first_name: "olusola",
     link_url: 'https://twitter.com'
 }
