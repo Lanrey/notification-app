@@ -4,8 +4,8 @@
   "description": "The backend repo built in nodejs for Notes app",
   "main": "index.js",
   "engines": {
-    "node": "18.2.0",
-    "npm": "8.9.0"
+    "node": "18.15",
+    "npm": "9.5.0"
   },
   "custom": {
     "knexfile": "server/database/config/knexfile.js"
@@ -16,10 +16,10 @@
     "ssl:gen": "cd ssl && ../server/scripts/ssl.sh && cd ..",
     "start:dev": "nodemon --exec babel-node server",
     "prod:build": "npm run clean && npm run build && npm run start",
-    "start": "GRPC_VERBOSITY=DEBUG GRPC_TRACE=all npm run clean && npm run build && node dist/index.js",
+    "start": "npm run clean && npm run build && node dist/index.js",
     "start1": "pm2 start node dist/index.js",
     "stop:all": "pm2 stop all",
-    "build": "babel server --out-dir dist",
+    "build": "babel server --out-dir dist && cpy './server/*.proto' dist",
     "clean": "rm -rf ./build ",
     "test": "nyc mocha --recursive -r esm --exit",
     "lint": "eslint '**/*.js'",
@@ -45,6 +45,7 @@
     "aws-sdk": "^2.773.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "cpy-cli": "^4.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",

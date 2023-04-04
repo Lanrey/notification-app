@@ -92,17 +92,21 @@ exports.init = init;
 
 */
 
-import { logger } from './helper';
-import * as grpc from '@grpc/grpc-js';
-import * as protoLoader from '@grpc/proto-loader';
-import { join } from 'path';
-import { NotificationServiceService} from '../notes-protos-nodejs/notification/notification_grpc_pb';
-import notification from './controllers/notification.controller';
-import { getNotifications, getResetPasswords, getVerifyEmails, getResetSuccessfulEmails, getWelcomeEmails } from './services/consumer.service';
+// import { logger } from "./helper";
+import * as grpc from "@grpc/grpc-js";
+import * as protoLoader from "@grpc/proto-loader";
+import { join } from "path";
+import notification from "./controllers/notification.controller";
+import {
+  getNotifications,
+  getResetPasswords,
+  getVerifyEmails,
+  getResetSuccessfulEmails,
+  getWelcomeEmails,
+} from "./services/consumer.service";
 const PORT = Number(process.env.PORT) || 30001;
 
-const PROTO_PATH = join(__dirname, './notification.proto');
-console.log(PROTO_PATH);
+const PROTO_PATH = join(__dirname, "./notification.proto");
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -110,10 +114,11 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   arrays: true,
 });
 
-const notificationProto = grpc.loadPackageDefinition(packageDefinition).notification;
+const notificationProto = grpc.loadPackageDefinition(packageDefinition)
+  .notification;
 const cleanup = (server) => {
   if (server) {
-    logger.info('Shutting down...');
+    console.info("Shutting down...");
     server.forceShutdown();
   }
 };
@@ -121,22 +126,26 @@ function main() {
   const addr = `0.0.0.0:${PORT}`;
   const server = new grpc.Server();
   const credentials = grpc.ServerCredentials.createInsecure();
+
   getNotifications();
   getResetPasswords();
   getResetSuccessfulEmails();
   getVerifyEmails();
   getWelcomeEmails();
-  process.on('SIGINT', () => {
-    logger.warn('Caught interrupt signal');
+  process.on("SIGINT", () => {
+    console.warn("Caught interrupt signal");
     cleanup(server);
   });
-  server.addService(notificationProto.NotificationService.service, notification);
+  server.addService(
+    notificationProto.NotificationService.service,
+    notification
+  );
   server.bindAsync(addr, credentials, (error) => {
     if (error) {
       return cleanup(server);
     }
     server.start();
   });
-  logger.info(`Listening on ${addr}`);
+  console.info(`Listening on ${addr}`);
 }
 main();

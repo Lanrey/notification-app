@@ -1,51 +1,50 @@
 import Notification from "../database/models/notification.model";
 import { serverResponse, serverError } from "../helper/serverResponse";
-import pb from "../../notes-protos-nodejs/notification/notification_pb";
-import * as grpc from '@grpc/grpc-js';
+import * as grpc from "@grpc/grpc-js";
 import { HttpError } from "../helper";
 
 exports.getNotification = async (call, callback) => {
-    try {
+  try {
+    const { notification_id, user_id } = call.request;
 
-        const {notification_id, user_id} = call.request;
-       
-        const result = await Notification.getSingleNotification(Number(notification_id), Number(user_id));
-       
-        callback(null, result)
+    const result = await Notification.getSingleNotification(
+      Number(notification_id),
+      Number(user_id)
+    );
 
-    } catch (error) {
-      if (error instanceof HttpError) {
-        callback({
-          code:
-            error.status == 404
-              ? grpc.status.NOT_FOUND
-              : grpc.status.INVALID_ARGUMENT,
-          message: error.message,
-        });
-      }
+    callback(null, result);
+  } catch (error) {
+    if (error instanceof HttpError) {
       callback({
-        code: grpc.status.INTERNAL,
-        message: error?.message,
+        code:
+          error.status == 404
+            ? grpc.status.NOT_FOUND
+            : grpc.status.INVALID_ARGUMENT,
+        message: error.message,
       });
     }
-  };
-
-
+    callback({
+      code: grpc.status.INTERNAL,
+      message: error?.message,
+    });
+  }
+};
 
 exports.getAllNotification = async (call, callback) => {
-    try {
+  try {
+    const { user_id, page } = call.request;
 
+    console.log(user_id);
+    console.log(page);
 
-        const {user_id, page} = call.request
+    const result = await Notification.getAllNotifications(
+      Number(page),
+      Number(user_id)
+    );
 
-        console.log(user_id);
-        console.log(page);
+    console.log(result);
 
-        const result = await Notification.getAllNotifications(Number(page), Number(user_id));
-
-        console.log(result);
-
-        /*
+    /*
 
         const newResult = result.data.map(res => {
 
@@ -62,7 +61,7 @@ exports.getAllNotification = async (call, callback) => {
         })
 */
 
-        /*
+    /*
 
         const notification = newResult.map(res => {
            const notifs =  new pb.GetNotificationResponse()
@@ -77,7 +76,7 @@ exports.getAllNotification = async (call, callback) => {
 
         */
 
-       /*
+    /*
         const response = new pb.GetAllNotificationResponse()
         .setNotificationsList(notification)
         .setTotal(String(result.pagination.total))
@@ -88,21 +87,20 @@ exports.getAllNotification = async (call, callback) => {
         .setTo(String(result.pagination.to))
 
         */
-        callback(null, result)
-
-    } catch (error) {
-      if (error instanceof HttpError) {
-        callback({
-          code:
-            error.status == 404
-              ? grpc.status.NOT_FOUND
-              : grpc.status.INVALID_ARGUMENT,
-          message: error.message,
-        });
-      }
+    callback(null, result);
+  } catch (error) {
+    if (error instanceof HttpError) {
       callback({
-        code: grpc.status.INTERNAL,
-        message: error?.message,
+        code:
+          error.status == 404
+            ? grpc.status.NOT_FOUND
+            : grpc.status.INVALID_ARGUMENT,
+        message: error.message,
       });
     }
-  };
+    callback({
+      code: grpc.status.INTERNAL,
+      message: error?.message,
+    });
+  }
+};
